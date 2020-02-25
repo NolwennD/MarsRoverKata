@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import fr.nolwenn.marsRoverKata.Position;
 import fr.nolwenn.marsRoverKata.Space;
 
-class ObstacleDetectorTest {
+class DetectorTest {
 
   @Test
   void test() {

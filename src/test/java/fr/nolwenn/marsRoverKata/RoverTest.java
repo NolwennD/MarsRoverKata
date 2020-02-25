@@ -86,4 +86,16 @@ class RoverTest {
     assertEquals(Heading.NORTH, rover.heading());
     assertEquals(position, rover.position());
   }
+
+  @Test
+  void shouldRoverReturnUnsafeMoveIfNextPositionHitAnObstacle() {
+    var rover = new Rover(Position.of(1, 1), Heading.NORTH);
+    assertEquals(Move.UNSAFE, rover.checkSafety());
+  }
+
+  @Test
+  void shouldRoverReturnSafeMoveIfNextPositionNotHitAnObstacle() {
+    var rover = new Rover(Position.of(1, 1), Heading.NORTH);
+    assertEquals(Move.SAFE, rover.checkSafety());
+  }
 }

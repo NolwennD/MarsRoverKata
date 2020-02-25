@@ -1,6 +1,8 @@
 package fr.nolwenn.marsRoverKata;
 
-  public final class Rover {private final Position position;
+  public final class Rover {
+
+  private final Position position;
   private final Heading heading;
 
   public Rover(Position position, Heading heading) {
@@ -63,5 +65,9 @@ package fr.nolwenn.marsRoverKata;
       rover = rover.apply(current);
     }
     return rover;
+  }
+
+  public Move checkSafety() {
+    return Move.UNSAFE;
   }
 }
