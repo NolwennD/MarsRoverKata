@@ -53,4 +53,9 @@ public final class Position {
   public int y() {
     return y;
   }
+
+  @Override
+  public String toString() {
+    return "Position [x=" + x + ", y=" + y + "]";
+  }
 }

@@ -1,9 +1,22 @@
 package fr.nolwenn.marsRoverKata;
 
-public final class Detector {
-  public Detector() {}
+import java.util.List;
 
-  public Obstacle scan(Space space) {
-    return space.getObstacle();
+public final class Detector {
+
+  private final Space space;
+
+  public Detector(Space space) {
+    this.space = space;
+  }
+
+  public MoveSafety scan(Position position) {
+    List<Obstacle> obstacles = space.getObstacle();
+    for (var obstacle : obstacles) {
+      if (obstacle.getContour().contains(position)) {
+        return MoveSafety.UNSAFE;
+      }
+    }
+    return MoveSafety.SAFE;
   }
 }

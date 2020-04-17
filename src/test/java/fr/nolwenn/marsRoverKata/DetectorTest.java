@@ -2,17 +2,30 @@ package fr.nolwenn.marsRoverKata;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import fr.nolwenn.marsRoverKata.Position;
-import fr.nolwenn.marsRoverKata.Space;
 
 class DetectorTest {
 
   @Test
-  void test() {
-    var detector = new fr.nolwenn.marsRoverKata.Detector();
-    var space =
-        new Space(new fr.nolwenn.marsRoverKata.Obstacle(Position.of(5, 5), Position.of(3, 3)));
-    var obstacle = new fr.nolwenn.marsRoverKata.Obstacle(Position.of(5, 5), Position.of(3, 3));
-    assertEquals(obstacle.getContour(), detector.scan(space).getContour());
+  void shouldReturnUnsafeMoveWhenWillHitAnObstacle() {
+    var space = new Space(new Obstacle(Position.of(5, 5), Position.of(3, 3)));
+    var detector = new Detector(space);
+    MoveSafety safety = detector.scan(Position.of(5, 5));
+    assertEquals(MoveSafety.UNSAFE, safety);
+  }
+
+  @Test
+  void shouldReturnSafeMoveWhenWillNotHitAnObstacle() {
+    var space = new Space(new Obstacle(Position.of(5, 5), Position.of(3, 3)));
+    var detector = new Detector(space);
+    MoveSafety safety = detector.scan(Position.of(0, 0));
+    assertEquals(MoveSafety.SAFE, safety);
+  }
+
+  @Test
+  void shouldReturnEmptyObstacleForAnEmptySpace() {
+    var space = new Space();
+    var detector = new Detector(space);
+    MoveSafety safety = detector.scan(Position.of(0, 0));
+    assertEquals(MoveSafety.SAFE, safety);
   }
 }

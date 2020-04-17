@@ -1,13 +1,17 @@
 package fr.nolwenn.marsRoverKata;
 
-public final class Space {
-  private final Obstacle obstacle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-  public Space(Obstacle obstacle) {
-    this.obstacle = obstacle;
+public final class Space {
+  private final List<Obstacle> obstacle = new ArrayList<>();
+
+  public Space(Obstacle... obstacle) {
+    this.obstacle.addAll(Arrays.asList(obstacle));
   }
 
-  public Obstacle getObstacle() {
+  public List<Obstacle> getObstacle() {
     return obstacle;
   }
 }

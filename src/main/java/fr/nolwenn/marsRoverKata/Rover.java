@@ -4,11 +4,21 @@ package fr.nolwenn.marsRoverKata;
 
   private final Position position;
   private final Heading heading;
+  private Detector detector;
 
-  public Rover(Position position, Heading heading) {
+  public Rover(Position position, Heading heading, Space space) {
     this.position = position;
     this.heading = heading;
+    this.detector = new Detector(space);
   }
+
+  public Rover(Position position, Heading heading, Detector detector) {
+    this.position = position;
+    this.heading = heading;
+    this.detector = detector;
+  }
+
+
 
   public Rover moveForward() {
     int x = position.x();
@@ -19,7 +29,11 @@ package fr.nolwenn.marsRoverKata;
       case WEST -> Position.of(x - 1, y);
       case SOUTH -> Position.of(x, y - 1);
     };
-    return new Rover(newPosition, heading);
+    if(detector.scan(newPosition) == MoveSafety.SAFE) {
+      return new Rover(newPosition, heading, detector);
+    } else {
+      return this;
+    }
   }
 
   public Position position() {
@@ -27,7 +41,7 @@ package fr.nolwenn.marsRoverKata;
   }
 
   public Rover turnLeft() {
-    return new Rover(position, heading.turnLeft());
+    return new Rover(position, heading.turnLeft(), detector);
   }
 
   public Heading heading() {
@@ -43,11 +57,15 @@ package fr.nolwenn.marsRoverKata;
         case WEST -> Position.of(x + 1, y);
         case SOUTH -> Position.of(x, y + 1);
       };
-    return new Rover(newPosition, heading);
+      if(detector.scan(newPosition) == MoveSafety.SAFE) {
+        return new Rover(newPosition, heading, detector);
+      } else {
+        return this;
+      }
   }
 
   public Rover turnRight() {
-    return new Rover(position, heading.turnRight());
+    return new Rover(position, heading.turnRight(), detector);
   }
 
   private Rover apply(Action action) {
@@ -65,9 +83,5 @@ package fr.nolwenn.marsRoverKata;
       rover = rover.apply(current);
     }
     return rover;
-  }
-
-  public Move checkSafety() {
-    return Move.UNSAFE;
   }
 }
